@@ -23,3 +23,4 @@ The primary functionality of this project is to offer a contact form that users 
 
 ## Contributions
 Contributions are welcome! If you have suggestions, improvements, or bug fixes, feel free to submit a pull request or raise an issue. Let’s work together to make this project even better!
+Made by D.V.Sathwik Reddy
