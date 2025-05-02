@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Text-to-Speech Generator</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Text-to-Speech Generator</h2>
+        <form id="ttsForm" onsubmit="submitForm(event)">
+            <textarea id="text" placeholder="Enter your text here..."></textarea>
+            <button type="submit">Generate Audio</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+    <footer>
+        <p>&copy; 2024 D.V.Sathwik Reddy. All rights reserved.</p>
+    </footer>
+</body>
+</html>
