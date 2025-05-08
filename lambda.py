@@ -7,9 +7,8 @@ def lambda_handler(event, context):
     polly = client('polly')
     s3 = client('s3')
     try:
-        body = json.loads(event['body'])
-        text = body['text']
-        bucket_name = os.environ['bucket_name']
+        text = event['text']
+        bucket_name = os.environ['my_bucket']
         region = os.environ['region']
         params = {
             'Text': text,
