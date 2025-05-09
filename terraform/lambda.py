@@ -16,7 +16,7 @@ def lambda_handler(event, context):
             'VoiceId': 'Salli'
         }
         response = polly.synthesize_speech(**params)
-        key = f"audio-{int(datetime.now().timestamp())}.mp3"
+        key = f"data/audio-{int(datetime.now().timestamp())}.mp3"
         s3.put_object(
             Bucket=bucket_name,
             Key=key,

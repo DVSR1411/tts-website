@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "my_bucket" {
   force_destroy = true
 }
 resource "aws_s3_bucket_public_access_block" "myaccess" {
-  bucket = aws_s3_bucket.my_bucket.id
+  bucket                  = aws_s3_bucket.my_bucket.id
   block_public_acls       = false
   block_public_policy     = false
   ignore_public_acls      = false
@@ -22,7 +22,8 @@ resource "aws_s3_bucket_policy" "mypolicy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect    = "Allow"
+        Sid = "Stmt1746775574906"
+        Effect = "Allow"
         Principal = "*"
         Action = [
           "s3:GetObject"
@@ -34,4 +35,22 @@ resource "aws_s3_bucket_policy" "mypolicy" {
     ]
   })
   depends_on = [aws_s3_bucket_public_access_block.myaccess]
+}
+resource "aws_s3_object" "frontend_files" {
+  for_each = fileset("${path.module}/../frontend", "**/*")
+  bucket = aws_s3_bucket.my_bucket.id
+  key    = each.value
+  source = "${path.module}/../frontend/${each.value}"
+  etag   = filemd5("${path.module}/../frontend/${each.value}")
+  depends_on = [null_resource.update_api]
+}
+resource "aws_s3_bucket_website_configuration" "website" {
+  bucket = aws_s3_bucket.my_bucket.id
+  index_document {
+    suffix = "index.html"
+  }
+  depends_on = [aws_s3_object.frontend_files]
+}
+output "s3_website" {
+  value = "http://${aws_s3_bucket_website_configuration.website.website_endpoint}"
 }

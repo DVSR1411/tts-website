@@ -107,6 +107,16 @@ resource "aws_api_gateway_deployment" "api_deployment" {
   lifecycle {
     create_before_destroy = true
   }
+  depends_on = [
+    aws_api_gateway_method.post_method,
+    aws_api_gateway_integration.lambda,
+    aws_api_gateway_method.options_method,
+    aws_api_gateway_integration.options_integration,
+    aws_api_gateway_method_response.options_200,
+    aws_api_gateway_integration_response.options_integration_200,
+    aws_api_gateway_integration_response.post_integration_200,
+    aws_api_gateway_method_response.post_200
+  ]
 }
 resource "aws_api_gateway_stage" "api_stage" {
   deployment_id = aws_api_gateway_deployment.api_deployment.id
