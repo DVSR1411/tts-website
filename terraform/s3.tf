@@ -42,6 +42,11 @@ resource "aws_s3_object" "frontend_files" {
   key    = each.value
   source = "${path.module}/../frontend/${each.value}"
   etag   = filemd5("${path.module}/../frontend/${each.value}")
+  content_type = lookup({
+    html = "text/html"
+    css  = "text/css"
+    js   = "application/javascript"
+  }, lower(trimspace(regex("\\.([^.]*)$", each.value)[0])), "application/octet-stream")
   depends_on = [null_resource.update_api]
 }
 resource "aws_s3_bucket_website_configuration" "website" {
