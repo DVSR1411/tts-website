@@ -41,7 +41,6 @@ resource "aws_s3_object" "frontend_files" {
   bucket = aws_s3_bucket.my_bucket.id
   key    = each.value
   source = "${path.module}/../frontend/${each.value}"
-  etag   = filemd5("${path.module}/../frontend/${each.value}")
   content_type = lookup({
     html = "text/html"
     css  = "text/css"
