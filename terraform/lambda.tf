@@ -15,7 +15,7 @@ resource "aws_lambda_function" "test_lambda" {
   environment {
     variables = {
       my_bucket = aws_s3_bucket.my_bucket.id
-      region    = data.aws_region.current.name
+      region    = data.aws_region.current.region
     }
   }
 }
